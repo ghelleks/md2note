@@ -7,6 +7,7 @@ This module provides the command-line interface and coordinates the conversion p
 import argparse
 import logging
 import sys
+import os
 from pathlib import Path
 from typing import Optional, List
 
@@ -27,7 +28,21 @@ class MD2Note:
             clean_dir: Optional path to the directory for processed files
         """
         self.source_dir = Path(source_dir)
+        if not self.source_dir.exists():
+            raise ValueError(f"Source directory does not exist: {source_dir}")
+        if not self.source_dir.is_dir():
+            raise ValueError(f"Source path is not a directory: {source_dir}")
+        if not os.access(self.source_dir, os.R_OK):
+            raise PermissionError(f"Cannot read from source directory: {source_dir}")
+            
         self.clean_dir = Path(clean_dir) if clean_dir else self.source_dir / "clean"
+        self.clean_dir.mkdir(parents=True, exist_ok=True)
+        if not self.clean_dir.exists():
+            raise ValueError(f"Clean directory could not be created: {self.clean_dir}")
+        if not self.clean_dir.is_dir():
+            raise ValueError(f"Clean path is not a directory: {self.clean_dir}")
+        if not os.access(self.clean_dir, os.W_OK):
+            raise PermissionError(f"Cannot write to clean directory: {self.clean_dir}")
         
         # Initialize components
         self.directory_scanner = DirectoryScanner(self.source_dir)
@@ -40,6 +55,10 @@ class MD2Note:
     
     def _setup_logging(self) -> None:
         """Configure logging for the application."""
+        # Remove any existing handlers
+        for handler in logging.root.handlers[:]:
+            logging.root.removeHandler(handler)
+            
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -66,10 +85,15 @@ class MD2Note:
             # Process the file
             processor = self.file_processor(str(file_path))
             content = processor.get_content()
-            metadata = processor.extract()
+            
+            # Handle empty files
             if not content:
-                self.logger.error(f"Failed to process file: {file_path}")
-                return False
+                self.logger.warning(f"Empty file: {file_path}")
+                # Move empty file to clean directory
+                self.file_mover.move_file(file_path)
+                return True
+                
+            metadata = processor.extract()
             
             # Create note
             note_created = self.apple_script.create_note(metadata.get('title', file_path.stem), content, metadata)
@@ -78,14 +102,18 @@ class MD2Note:
                 return False
             
             # Move file to clean directory
-            self.file_mover.move_file(file_path)
+            try:
+                self.file_mover.move_file(file_path)
+            except Exception as e:
+                self.logger.error(f"Failed to move file {file_path}: {str(e)}")
+                raise
             
             self.logger.info(f"Successfully processed file: {file_path}")
             return True
             
         except Exception as e:
             self.logger.error(f"Error processing file {file_path}: {str(e)}")
-            return False
+            raise
     
     def run(self) -> None:
         """Run the main conversion process."""
@@ -105,10 +133,15 @@ class MD2Note:
             failed = 0
             
             for file_path in markdown_files:
-                if self.process_file(file_path):
-                    successful += 1
-                else:
+                try:
+                    if self.process_file(file_path):
+                        successful += 1
+                    else:
+                        failed += 1
+                except Exception as e:
+                    self.logger.error(f"Failed to process {file_path}: {str(e)}")
                     failed += 1
+                    raise
             
             # Log summary
             self.logger.info(f"Conversion complete. Successful: {successful}, Failed: {failed}")
