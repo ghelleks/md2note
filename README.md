@@ -6,12 +6,19 @@ A Python application that converts markdown files to Apple Notes, preserving met
 
 ```
 md2note/
-├── src/            # Source code
-├── tests/          # Test files
-├── docs/           # Documentation
-├── requirements.txt # Python dependencies
-└── README.md       # This file
+├── src/                    # Source code
+├── tests/                  # Test files
+├── docs/                   # Documentation
+│   ├── project-plan.md     # Project implementation plan
+│   └── project-requirements.md  # Project requirements
+├── requirements.txt        # Python dependencies
+└── README.md              # This file
 ```
+
+## Documentation
+
+- Project requirements are documented in `docs/project-requirements.md`
+- Project implementation plan is in `docs/project-plan.md`
 
 ## Setup
 
