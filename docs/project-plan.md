@@ -16,10 +16,12 @@ This project plan outlines the phases and deliverables required to implement an 
 ---
 
 ## Phase 2: Core Functionality Implementation
-### 2.1 Directory Scanning & File Handling
+### 2.1 Directory Scanning & File Handling ✅
 **Deliverables:**
 - Python code to select and scan a directory for markdown files
 - Unit tests for directory scanning and file listing
+
+**Status: COMPLETE**
 
 ### 2.2 Markdown Parsing & Metadata Extraction
 **Deliverables:**
