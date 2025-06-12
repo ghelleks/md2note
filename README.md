@@ -40,12 +40,12 @@ pip install -r requirements.txt
 
 Basic usage:
 ```bash
-python src/main.py /path/to/markdown/files
+python md2note.py /path/to/markdown/files
 ```
 
 With custom clean directory:
 ```bash
-python src/main.py /path/to/markdown/files /path/to/clean/directory
+python md2note.py /path/to/markdown/files /path/to/clean/directory
 ```
 
 ## Project Structure
@@ -53,15 +53,15 @@ python src/main.py /path/to/markdown/files /path/to/clean/directory
 ```
 md2note/
 ├── src/
-│   ├── main.py           # Main application entry point
+│   ├── md2note.py        # Main application entry point
 │   ├── applescript.py    # AppleScript integration
 │   ├── file_mover.py     # File management
-│   └── markdown.py       # Markdown processing
+│   └── metadata.py       # Markdown processing
 ├── tests/
 │   ├── test_main.py
 │   ├── test_applescript.py
 │   ├── test_file_mover.py
-│   ├── test_markdown.py
+│   ├── test_metadata.py
 │   └── test_integration.py
 ├── docs/
 │   ├── cli-documentation.md
