@@ -30,7 +30,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "md2note=main:main",
+            "md2note=md2note:main",
         ],
     },
 ) 
