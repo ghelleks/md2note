@@ -23,10 +23,12 @@ This project plan outlines the phases and deliverables required to implement an 
 
 **Status: COMPLETE**
 
-### 2.2 Markdown Parsing & Metadata Extraction
+### 2.2 Markdown Parsing & Metadata Extraction ✅
 **Deliverables:**
 - Python script to parse markdown files and extract metadata (prefer YAML front matter, fall back to file properties)
 - Unit tests for metadata extraction and parsing logic
+
+**Status: COMPLETE**
 
 ### 2.3 Note Creation in Apple Notes via AppleScript
 **Deliverables:**
