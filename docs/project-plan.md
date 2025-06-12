@@ -30,10 +30,12 @@ This project plan outlines the phases and deliverables required to implement an 
 
 **Status: COMPLETE**
 
-### 2.3 Note Creation in Apple Notes via AppleScript
+### 2.3 Note Creation in Apple Notes via AppleScript ✅
 **Deliverables:**
 - Python code to call AppleScript for creating a new note in Apple Notes with content and metadata
 - Unit tests for note creation logic (mocked where possible)
+
+**Status: COMPLETE**
 
 ### 2.4 File Movement on Success
 **Deliverables:**
@@ -72,4 +74,4 @@ This project plan outlines the phases and deliverables required to implement an 
 
 ---
 
-*Last updated: YYYY-MM-DD* 
+*Last updated: 2024-06-09* 

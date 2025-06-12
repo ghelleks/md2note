@@ -46,4 +46,8 @@ This project aims to develop a Python application that processes a directory of 
 
 ---
 
-*Last updated: YYYY-MM-DD* 
+## Implementation Notes
+- Metadata extraction is implemented to prefer YAML front matter, falling back to file properties if not present.
+- AppleScript integration is handled via a dedicated Python module that creates notes in Apple Notes, with robust error handling and test coverage.
+
+*Last updated: 2024-06-09* 
