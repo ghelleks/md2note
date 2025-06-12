@@ -23,6 +23,7 @@ wheels/
 # Virtual Environment
 venv/
 ENV/
+env/
 
 # IDE
 .idea/
@@ -30,6 +31,19 @@ ENV/
 *.swp
 *.swo
 
-# OS
+# Logs
+*.log
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# OS
 Thumbs.db 

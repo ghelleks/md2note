@@ -1,52 +1,52 @@
-2025-06-11 22:19:41,379 - src.main - INFO - Starting conversion process from /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source
-2025-06-11 22:19:41,379 - src.main - INFO - Found 6 Markdown files
-2025-06-11 22:19:41,379 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/with_metadata.md
-2025-06-11 22:19:41,652 - src.applescript - INFO - Successfully created note: Test Note
-2025-06-11 22:19:41,654 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/with_metadata.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/clean/with_metadata.md
-2025-06-11 22:19:41,654 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/with_metadata.md
-2025-06-11 22:19:41,654 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/special_chars.md
-2025-06-11 22:19:41,802 - src.applescript - INFO - Successfully created note: special_chars
-2025-06-11 22:19:41,803 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/special_chars.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/clean/special_chars.md
-2025-06-11 22:19:41,803 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/special_chars.md
-2025-06-11 22:19:41,803 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/simple.md
-2025-06-11 22:19:41,927 - src.applescript - INFO - Successfully created note: simple
-2025-06-11 22:19:41,927 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/simple.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/clean/simple.md
-2025-06-11 22:19:41,927 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/simple.md
-2025-06-11 22:19:41,927 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/empty.md
-2025-06-11 22:19:41,927 - src.main - WARNING - Empty file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/empty.md
-2025-06-11 22:19:41,927 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/empty.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/clean/empty.md
-2025-06-11 22:19:41,927 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/invalid.md
-2025-06-11 22:19:42,047 - src.applescript - INFO - Successfully created note: invalid
-2025-06-11 22:19:42,047 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/invalid.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/clean/invalid.md
-2025-06-11 22:19:42,047 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/invalid.md
-2025-06-11 22:19:42,047 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/nested/subdir/note.md
-2025-06-11 22:19:42,170 - src.applescript - INFO - Successfully created note: note
-2025-06-11 22:19:42,171 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/nested/subdir/note.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/clean/nested/subdir/note.md
-2025-06-11 22:19:42,171 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmp578ohssw/source/nested/subdir/note.md
-2025-06-11 22:19:42,171 - src.main - INFO - Conversion complete. Successful: 6, Failed: 0
-2025-06-11 22:19:42,339 - src.main - INFO - Starting conversion process from /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source
-2025-06-11 22:19:42,339 - src.main - INFO - Found 6 Markdown files
-2025-06-11 22:19:42,339 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/with_metadata.md
-2025-06-11 22:19:42,600 - src.applescript - INFO - Successfully created note: Test Note
-2025-06-11 22:19:42,602 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/with_metadata.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/clean/with_metadata.md
-2025-06-11 22:19:42,602 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/with_metadata.md
-2025-06-11 22:19:42,602 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/special_chars.md
-2025-06-11 22:19:42,742 - src.applescript - INFO - Successfully created note: special_chars
-2025-06-11 22:19:42,742 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/special_chars.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/clean/special_chars.md
-2025-06-11 22:19:42,742 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/special_chars.md
-2025-06-11 22:19:42,742 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/simple.md
-2025-06-11 22:19:42,862 - src.applescript - INFO - Successfully created note: simple
-2025-06-11 22:19:42,862 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/simple.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/clean/simple.md
-2025-06-11 22:19:42,862 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/simple.md
-2025-06-11 22:19:42,862 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/empty.md
-2025-06-11 22:19:42,862 - src.main - WARNING - Empty file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/empty.md
-2025-06-11 22:19:42,862 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/empty.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/clean/empty.md
-2025-06-11 22:19:42,862 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/invalid.md
-2025-06-11 22:19:42,995 - src.applescript - INFO - Successfully created note: invalid
-2025-06-11 22:19:42,995 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/invalid.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/clean/invalid.md
-2025-06-11 22:19:42,995 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/invalid.md
-2025-06-11 22:19:42,995 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/nested/subdir/note.md
-2025-06-11 22:19:43,124 - src.applescript - INFO - Successfully created note: note
-2025-06-11 22:19:43,125 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/nested/subdir/note.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/clean/nested/subdir/note.md
-2025-06-11 22:19:43,125 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmperwat_s7/source/nested/subdir/note.md
-2025-06-11 22:19:43,125 - src.main - INFO - Conversion complete. Successful: 6, Failed: 0
+2025-06-11 22:31:05,319 - src.main - INFO - Starting conversion process from /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source
+2025-06-11 22:31:05,319 - src.main - INFO - Found 6 Markdown files
+2025-06-11 22:31:05,319 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/with_metadata.md
+2025-06-11 22:31:05,586 - src.applescript - INFO - Successfully created note: Test Note
+2025-06-11 22:31:05,588 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/with_metadata.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/clean/with_metadata.md
+2025-06-11 22:31:05,588 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/with_metadata.md
+2025-06-11 22:31:05,588 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/special_chars.md
+2025-06-11 22:31:05,727 - src.applescript - INFO - Successfully created note: special_chars
+2025-06-11 22:31:05,727 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/special_chars.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/clean/special_chars.md
+2025-06-11 22:31:05,727 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/special_chars.md
+2025-06-11 22:31:05,728 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/simple.md
+2025-06-11 22:31:05,846 - src.applescript - INFO - Successfully created note: simple
+2025-06-11 22:31:05,847 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/simple.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/clean/simple.md
+2025-06-11 22:31:05,847 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/simple.md
+2025-06-11 22:31:05,847 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/empty.md
+2025-06-11 22:31:05,847 - src.main - WARNING - Empty file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/empty.md
+2025-06-11 22:31:05,847 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/empty.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/clean/empty.md
+2025-06-11 22:31:05,847 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/invalid.md
+2025-06-11 22:31:05,969 - src.applescript - INFO - Successfully created note: invalid
+2025-06-11 22:31:05,970 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/invalid.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/clean/invalid.md
+2025-06-11 22:31:05,970 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/invalid.md
+2025-06-11 22:31:05,970 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/nested/subdir/note.md
+2025-06-11 22:31:06,096 - src.applescript - INFO - Successfully created note: note
+2025-06-11 22:31:06,096 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/nested/subdir/note.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/clean/nested/subdir/note.md
+2025-06-11 22:31:06,096 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpd1i5s1lv/source/nested/subdir/note.md
+2025-06-11 22:31:06,097 - src.main - INFO - Conversion complete. Successful: 6, Failed: 0
+2025-06-11 22:31:06,266 - src.main - INFO - Starting conversion process from /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source
+2025-06-11 22:31:06,266 - src.main - INFO - Found 6 Markdown files
+2025-06-11 22:31:06,266 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/with_metadata.md
+2025-06-11 22:31:06,529 - src.applescript - INFO - Successfully created note: Test Note
+2025-06-11 22:31:06,531 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/with_metadata.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/clean/with_metadata.md
+2025-06-11 22:31:06,531 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/with_metadata.md
+2025-06-11 22:31:06,531 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/special_chars.md
+2025-06-11 22:31:06,680 - src.applescript - INFO - Successfully created note: special_chars
+2025-06-11 22:31:06,680 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/special_chars.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/clean/special_chars.md
+2025-06-11 22:31:06,680 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/special_chars.md
+2025-06-11 22:31:06,680 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/simple.md
+2025-06-11 22:31:06,804 - src.applescript - INFO - Successfully created note: simple
+2025-06-11 22:31:06,804 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/simple.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/clean/simple.md
+2025-06-11 22:31:06,804 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/simple.md
+2025-06-11 22:31:06,804 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/empty.md
+2025-06-11 22:31:06,804 - src.main - WARNING - Empty file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/empty.md
+2025-06-11 22:31:06,804 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/empty.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/clean/empty.md
+2025-06-11 22:31:06,804 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/invalid.md
+2025-06-11 22:31:06,931 - src.applescript - INFO - Successfully created note: invalid
+2025-06-11 22:31:06,931 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/invalid.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/clean/invalid.md
+2025-06-11 22:31:06,931 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/invalid.md
+2025-06-11 22:31:06,931 - src.main - INFO - Processing file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/nested/subdir/note.md
+2025-06-11 22:31:07,054 - src.applescript - INFO - Successfully created note: note
+2025-06-11 22:31:07,055 - src.file_mover - INFO - Moved /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/nested/subdir/note.md to /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/clean/nested/subdir/note.md
+2025-06-11 22:31:07,055 - src.main - INFO - Successfully processed file: /var/folders/2y/hz4zrbdd3hq9qgdl3t5ksnq80000gn/T/tmpmp2k0b44/source/nested/subdir/note.md
+2025-06-11 22:31:07,055 - src.main - INFO - Conversion complete. Successful: 6, Failed: 0

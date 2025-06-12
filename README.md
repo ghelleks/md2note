@@ -1,34 +1,21 @@
-# Markdown to Apple Notes Converter
+# MD2Note - Markdown to Apple Notes Converter
 
-A Python application that converts Markdown files to Apple Notes, preserving formatting and structure.
+A Python application that converts Markdown files to Apple Notes, preserving formatting and metadata.
 
 ## Features
 
-- Scans directories for Markdown files
-- Converts Markdown to Apple Notes format
-- Preserves formatting and structure
-- Handles metadata and frontmatter
-- Moves processed files to a clean directory while preserving structure
+- Converts Markdown files to Apple Notes
+- Preserves formatting and metadata
+- Handles nested directory structures
+- Supports special characters and Unicode
 - Comprehensive error handling and logging
-
-## Project Status
-
-The project is currently in active development. The following components have been implemented:
-
-- ✅ Directory scanning functionality
-- ✅ AppleScript integration for note creation
-- ✅ Markdown to note conversion
-- ✅ File movement with structure preservation
-- 🔄 Main application (in progress)
-- ⏳ Integration testing
-- ⏳ Performance optimization
-- ⏳ User experience improvements
+- Command-line interface for easy automation
 
 ## Requirements
 
-- Python 3.9+
-- macOS (for AppleScript integration)
-- Apple Notes application
+- Python 3.9 or higher
+- macOS (for Apple Notes integration)
+- AppleScript support
 
 ## Installation
 
@@ -41,7 +28,7 @@ cd md2note
 2. Create and activate a virtual environment:
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # On macOS/Linux
 ```
 
 3. Install dependencies:
@@ -51,38 +38,41 @@ pip install -r requirements.txt
 
 ## Usage
 
-The application is currently in development. Once completed, it will be used as follows:
-
+Basic usage:
 ```bash
-python src/main.py --source /path/to/markdown/files
+python src/main.py /path/to/markdown/files
 ```
 
-## Development
+With custom clean directory:
+```bash
+python src/main.py /path/to/markdown/files /path/to/clean/directory
+```
 
-### Project Structure
+## Project Structure
 
 ```
 md2note/
 ├── src/
-│   ├── directory_scanner.py
-│   ├── apple_script_handler.py
-│   ├── file_processor.py
-│   ├── file_mover.py
-│   └── main.py
+│   ├── main.py           # Main application entry point
+│   ├── applescript.py    # AppleScript integration
+│   ├── file_mover.py     # File management
+│   └── markdown.py       # Markdown processing
 ├── tests/
-│   ├── test_directory_scanner.py
-│   ├── test_apple_script_handler.py
-│   ├── test_file_processor.py
-│   └── test_file_mover.py
+│   ├── test_main.py
+│   ├── test_applescript.py
+│   ├── test_file_mover.py
+│   ├── test_markdown.py
+│   └── test_integration.py
 ├── docs/
-│   └── api-documentation.md
-├── TODO
+│   ├── cli-documentation.md
+│   └── project-requirements.md
 ├── requirements.txt
 └── README.md
 ```
 
-### Running Tests
+## Testing
 
+Run the test suite:
 ```bash
 python -m pytest tests/
 ```
@@ -101,6 +91,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- AppleScript documentation
-- Python Markdown libraries
-- Apple Notes API 
+- AppleScript for Notes integration
+- Python's pathlib for file handling
+- pytest for testing framework 
