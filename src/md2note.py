@@ -1,46 +1,35 @@
+#!/usr/bin/env python3
 """
-MD2Note - Convert markdown files to Apple Notes
+Main entry point for the Markdown to Apple Notes converter.
 """
+import argparse
+import logging
+import sys
+from src.app import MD2Note
 
-import os
-from pathlib import Path
-from typing import List, Optional
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Convert Markdown files to Apple Notes"
+    )
+    parser.add_argument(
+        "--source",
+        required=True,
+        help="Source directory containing Markdown files"
+    )
+    parser.add_argument(
+        "--clean",
+        help="Directory to move processed files to (default: source/clean)"
+    )
+    return parser.parse_args()
 
+def main() -> None:
+    args = parse_args()
+    try:
+        app = MD2Note(args.source, args.clean)
+        app.run()
+    except Exception as e:
+        logging.error(f"Application error: {str(e)}")
+        sys.exit(1)
 
-class DirectoryScanner:
-    """Handles scanning directories for markdown files."""
-
-    def __init__(self, directory: str):
-        """
-        Initialize the directory scanner.
-
-        Args:
-            directory (str): Path to the directory to scan
-        """
-        self.directory = Path(directory)
-        if not self.directory.exists():
-            raise ValueError(f"Directory does not exist: {directory}")
-        if not self.directory.is_dir():
-            raise ValueError(f"Path is not a directory: {directory}")
-
-    def scan_for_markdown(self) -> List[Path]:
-        """
-        Scan the directory for markdown files.
-
-        Returns:
-            List[Path]: List of paths to markdown files
-        """
-        markdown_files = []
-        for file_path in self.directory.glob("**/*.md"):
-            if file_path.is_file():
-                markdown_files.append(file_path)
-        return markdown_files
-
-    def get_file_count(self) -> int:
-        """
-        Get the total number of markdown files in the directory.
-
-        Returns:
-            int: Number of markdown files
-        """
-        return len(self.scan_for_markdown())
+if __name__ == "__main__":
+    main()

@@ -1,79 +1,129 @@
+"""
+Main application class for the Markdown to Apple Notes converter.
+"""
 import logging
-import sys
 from pathlib import Path
-from typing import Optional, Any
+from typing import Optional
 
-from src.md2note import DirectoryScanner
-from src.applescript import AppleNotesCreator
-from src.metadata import MarkdownMetadataExtractor
-from src.file_mover import FileMover
+from .directory_scanner import DirectoryScanner
+from .applescript import AppleNotesCreator
+from .file_mover import FileMover
+from .metadata import MarkdownMetadataExtractor
 
 class MD2Note:
-    """Main application class for converting Markdown files to Apple Notes."""
+    """Main application class for converting markdown files to Apple Notes."""
+
     def __init__(
         self,
         source_dir: str,
         clean_dir: Optional[str] = None,
-        directory_scanner: Optional[Any] = None,
-        apple_script: Optional[Any] = None,
-        file_processor: Optional[Any] = None,
-        file_mover: Optional[Any] = None,
+        directory_scanner=None,
+        apple_script=None,
+        file_processor=None,
+        file_mover=None
     ):
+        """
+        Initialize the MD2Note application.
+
+        Args:
+            source_dir (str): Directory containing markdown files
+            clean_dir (str, optional): Directory to move processed files to
+            directory_scanner: Optional custom directory scanner (for testing)
+            apple_script: Optional custom AppleNotesCreator (for testing)
+            file_processor: Optional custom file processor class (for testing)
+            file_mover: Optional custom file mover (for testing)
+        """
         self.source_dir = Path(source_dir)
         self.clean_dir = Path(clean_dir) if clean_dir else self.source_dir / "clean"
-        self.directory_scanner = directory_scanner or DirectoryScanner(self.source_dir)
-        self.apple_script = apple_script or AppleNotesCreator()
+
+        # Initialize components (allow dependency injection for testing)
+        self.scanner = directory_scanner or DirectoryScanner(str(self.source_dir))
+        self.apple_notes = apple_script or AppleNotesCreator()
         self.file_processor = file_processor or MarkdownMetadataExtractor
-        self.file_mover = file_mover or FileMover(self.source_dir, self.clean_dir)
+        self.file_mover = file_mover or FileMover(str(self.source_dir), str(self.clean_dir))
+
+        # Set up logging
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        logging.basicConfig(
-            level=logging.INFO,
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            handlers=[
-                logging.StreamHandler(sys.stdout),
-                logging.FileHandler('md2note.log')
-            ]
-        )
-        self.logger = logging.getLogger(__name__)
+        """Set up logging configuration."""
+        self.logger = logging.getLogger("src.app")
+        self.logger.setLevel(logging.INFO)
+        
+        # Create a file handler
+        log_file = Path("md2note.log")
+        log_file.touch(exist_ok=True)  # Create the log file if it doesn't exist
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(logging.INFO)
+        
+        # Create a console handler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        
+        # Create a formatter and add it to the handlers
+        formatter = logging.Formatter('%(levelname)-8s %(name)s:%(lineno)d %(message)s')
+        file_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+        
+        # Add the handlers to the logger
+        self.logger.addHandler(file_handler)
+        self.logger.addHandler(console_handler)
+        
+        # Print the handlers attached to the logger
+        print("Handlers attached to logger:", self.logger.handlers)
+        
+        # Force a flush on each handler
+        for handler in self.logger.handlers:
+            handler.flush()
 
     def process_file(self, file_path: Path) -> bool:
+        """Process a single markdown file."""
         try:
-            self.logger.info(f"Processing file: {file_path}")
             processor = self.file_processor(str(file_path))
             content = processor.get_content()
             metadata = processor.extract()
-            if not content:
-                self.logger.error(f"Failed to process file: {file_path}")
+            title = metadata.get("title", file_path.stem)
+            if self.apple_notes.create_note(title, content, metadata):
+                self.file_mover.move_file(file_path)
+                self.logger.info(f"Successfully processed {file_path}")
+                return True
+            else:
+                self.logger.error(f"Failed to create note for {file_path}")
                 return False
-            note_created = self.apple_script.create_note(metadata.get('title', file_path.stem), content, metadata)
-            if not note_created:
-                self.logger.error(f"Failed to create note for file: {file_path}")
-                return False
-            self.file_mover.move_file(file_path)
-            self.logger.info(f"Successfully processed file: {file_path}")
-            return True
         except Exception as e:
-            self.logger.error(f"Error processing file {file_path}: {str(e)}")
+            self.logger.error(f"Error processing {file_path}: {str(e)}")
             return False
 
     def run(self) -> None:
+        """Run the markdown to notes conversion process."""
         try:
-            self.logger.info(f"Starting conversion process from {self.source_dir}")
-            markdown_files = self.directory_scanner.scan_for_markdown()
-            if not markdown_files:
-                self.logger.warning("No Markdown files found in the source directory")
+            self.logger.info("Starting conversion process")
+            # Create clean directory if it doesn't exist
+            self.clean_dir.mkdir(parents=True, exist_ok=True)
+
+            # Get list of markdown files
+            markdown_files = self.scanner.scan_for_markdown()
+            total_files = len(markdown_files)
+
+            if total_files == 0:
+                self.logger.warning(f"No markdown files found in {self.source_dir}")
                 return
-            self.logger.info(f"Found {len(markdown_files)} Markdown files")
+
+            self.logger.info(f"Found {total_files} markdown files to process")
+
+            # Process each file
             successful = 0
             failed = 0
+
             for file_path in markdown_files:
                 if self.process_file(file_path):
                     successful += 1
                 else:
                     failed += 1
-            self.logger.info(f"Conversion complete. Successful: {successful}, Failed: {failed}")
+
+            # Log summary
+            self.logger.info(f"Processing complete. {successful} files processed successfully, {failed} failed.")
+
         except Exception as e:
-            self.logger.error(f"Error during conversion process: {str(e)}")
+            self.logger.error(f"Application error: {str(e)}")
             raise 

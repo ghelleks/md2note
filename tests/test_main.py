@@ -150,6 +150,7 @@ def test_md2note_error_handling(temp_source_dir):
 
 def test_logging_setup(temp_source_dir):
     app = MD2Note(str(temp_source_dir))
+    app.logger.info("Test log message")
     assert app.logger.name == "src.app"
     assert Path("md2note.log").exists()
     Path("md2note.log").unlink() 

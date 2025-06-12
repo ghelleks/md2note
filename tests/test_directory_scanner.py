@@ -6,7 +6,7 @@ import os
 import tempfile
 from pathlib import Path
 import pytest
-from src.md2note import DirectoryScanner
+from src.directory_scanner import DirectoryScanner
 
 
 @pytest.fixture
