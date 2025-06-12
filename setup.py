@@ -27,10 +27,11 @@ setup(
     install_requires=[
         "pyyaml>=6.0",
         "markdown>=3.4",
+        "python-frontmatter>=1.0.0",
     ],
     entry_points={
         "console_scripts": [
-            "md2note=md2note:main",
+            "md2note=src.md2note:main",
         ],
     },
 ) 
