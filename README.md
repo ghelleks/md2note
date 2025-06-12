@@ -75,8 +75,8 @@ md2note/
 │   ├── test_file_processor.py
 │   └── test_file_mover.py
 ├── docs/
-│   ├── implementation-status.md
 │   └── api-documentation.md
+├── TODO
 ├── requirements.txt
 └── README.md
 ```

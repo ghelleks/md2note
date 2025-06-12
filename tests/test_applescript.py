@@ -45,12 +45,17 @@ def test_create_note_success(notes_creator, mock_subprocess):
     assert result is True
     
     # Verify the AppleScript command was called with correct parameters
-    mock_subprocess.assert_called_once()
-    args = mock_subprocess.call_args[0]
-    assert 'osascript' in args[0]
-    assert title in args[2]
-    assert content in args[2]
-    assert "Test Author" in args[2]
+    # We expect two calls: one for verification and one for note creation
+    assert mock_subprocess.call_count == 2
+    
+    # Get the second call (note creation)
+    note_creation_call = mock_subprocess.call_args_list[1]
+    args = note_creation_call[0]
+    # args[0] is the list of command-line arguments: ['osascript', '-e', script]
+    script = args[0][2]
+    assert title in script
+    assert content in script
+    assert "Test Author" in script
 
 def test_create_note_failure(notes_creator, mock_subprocess):
     """Test note creation failure."""
