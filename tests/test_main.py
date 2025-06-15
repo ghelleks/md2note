@@ -65,6 +65,7 @@ def test_md2note_process_file(temp_source_dir):
     processor_instance = MagicMock()
     processor_instance.get_content.return_value = "Processed content"
     processor_instance.extract.return_value = {"title": "Test Title"}
+    processor_instance.get_title.return_value = "Test Title"
     processor_cls.return_value = processor_instance
     apple_script.create_note.return_value = True
     app = MD2Note(
@@ -79,6 +80,7 @@ def test_md2note_process_file(temp_source_dir):
     processor_cls.assert_called_with(str(file_path))
     processor_instance.get_content.assert_called_once()
     processor_instance.extract.assert_called_once()
+    processor_instance.get_title.assert_called_once()
     apple_script.create_note.assert_called_once_with("Test Title", "Processed content", {"title": "Test Title"})
     mover.move_file.assert_called_once_with(file_path)
 

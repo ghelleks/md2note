@@ -58,4 +58,26 @@ class MarkdownMetadataExtractor:
             except Exception:
                 with open(self.file_path, 'r', encoding='utf-8') as f:
                     return f.read()
-        return self._post.content if self._post else "" 
+        return self._post.content if self._post else ""
+
+    def get_title(self) -> str:
+        """
+        Extract title from markdown content or filename.
+        Prioritizes H1 headers, falls back to filename without extension.
+        Returns:
+            str: Note title
+        """
+        content = self.get_content()
+        
+        # Look for H1 header at start of content
+        lines = content.strip().split('\n')
+        for line in lines:
+            line = line.strip()
+            if line.startswith('# '):
+                return line[2:].strip()
+            elif line and not line.startswith('#'):
+                # Stop at first non-header content
+                break
+        
+        # Fall back to filename without extension
+        return self.file_path.stem 

@@ -82,7 +82,7 @@ class MD2Note:
             processor = self.file_processor(str(file_path))
             content = processor.get_content()
             metadata = processor.extract()
-            title = metadata.get("title", file_path.stem)
+            title = processor.get_title()
             if self.apple_notes.create_note(title, content, metadata):
                 self.file_mover.move_file(file_path)
                 self.logger.info(f"Successfully processed {file_path}")
