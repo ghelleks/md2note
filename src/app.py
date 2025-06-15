@@ -9,6 +9,7 @@ from .directory_scanner import DirectoryScanner
 from .applescript import AppleNotesCreator
 from .file_mover import FileMover
 from .metadata import MarkdownMetadataExtractor
+from .exporters import ExporterFactory
 
 class MD2Note:
     """Main application class for converting markdown files to Apple Notes."""
@@ -17,8 +18,10 @@ class MD2Note:
         self,
         source_dir: str,
         clean_dir: Optional[str] = None,
+        export_type: str = "apple_notes",
+        gdocs_folder: Optional[str] = None,
         directory_scanner=None,
-        apple_script=None,
+        exporter=None,
         file_processor=None,
         file_mover=None
     ):
@@ -28,8 +31,10 @@ class MD2Note:
         Args:
             source_dir (str): Directory containing markdown files
             clean_dir (str, optional): Directory to move processed files to
+            export_type (str): Export destination type ('apple_notes' or 'google_docs')
+            gdocs_folder (str, optional): Google Drive folder for Google Docs export
             directory_scanner: Optional custom directory scanner (for testing)
-            apple_script: Optional custom AppleNotesCreator (for testing)
+            exporter: Optional custom exporter (for testing)
             file_processor: Optional custom file processor class (for testing)
             file_mover: Optional custom file mover (for testing)
         """
@@ -38,7 +43,7 @@ class MD2Note:
 
         # Initialize components (allow dependency injection for testing)
         self.scanner = directory_scanner or DirectoryScanner(str(self.source_dir))
-        self.apple_notes = apple_script or AppleNotesCreator()
+        self.exporter = exporter or ExporterFactory.create_exporter(export_type, gdocs_folder=gdocs_folder)
         self.file_processor = file_processor or MarkdownMetadataExtractor
         self.file_mover = file_mover or FileMover(str(self.source_dir), str(self.clean_dir))
 
@@ -83,21 +88,27 @@ class MD2Note:
             content = processor.get_content()
             metadata = processor.extract()
             title = processor.get_title()
-            if self.apple_notes.create_note(title, content, metadata):
+            if self.exporter.export(title, content, metadata):
                 self.file_mover.move_file(file_path)
                 self.logger.info(f"Successfully processed {file_path}")
                 return True
             else:
-                self.logger.error(f"Failed to create note for {file_path}")
+                self.logger.error(f"Failed to export document for {file_path}")
                 return False
         except Exception as e:
             self.logger.error(f"Error processing {file_path}: {str(e)}")
             return False
 
     def run(self) -> None:
-        """Run the markdown to notes conversion process."""
+        """Run the markdown to document conversion process."""
         try:
             self.logger.info("Starting conversion process")
+            
+            # Validate exporter configuration
+            if not self.exporter.validate_configuration():
+                self.logger.error("Exporter configuration validation failed")
+                raise RuntimeError("Exporter not properly configured")
+            
             # Create clean directory if it doesn't exist
             self.clean_dir.mkdir(parents=True, exist_ok=True)
 
