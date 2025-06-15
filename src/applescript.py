@@ -18,6 +18,17 @@ class AppleNotesCreator:
         """Initialize the AppleNotesCreator."""
         self._verify_notes_app()
 
+    @staticmethod
+    def generate_unique_folder_name() -> str:
+        """
+        Generate a unique folder name using timestamp.
+        
+        Returns:
+            str: Unique folder name in format "md2note-YYYYMMDD-HHMMSS"
+        """
+        timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        return f"md2note-{timestamp}"
+
     def _verify_notes_app(self) -> None:
         """Verify that Apple Notes is available."""
         script = '''
@@ -29,7 +40,7 @@ class AppleNotesCreator:
         if not result:
             raise RuntimeError("Apple Notes is not running. Please start Notes.app first.")
 
-    def create_note(self, title: str, content: str, metadata: Optional[Dict[str, Any]] = None) -> bool:
+    def create_note(self, title: str, content: str, metadata: Optional[Dict[str, Any]] = None, folder: Optional[str] = None) -> bool:
         """
         Create a new note in Apple Notes.
 
@@ -37,6 +48,7 @@ class AppleNotesCreator:
             title (str): The title of the note
             content (str): The content of the note (markdown format)
             metadata (Dict[str, Any], optional): Additional metadata to include in the note
+            folder (str, optional): The folder name to place the note in. If None, uses default "Notes" folder.
 
         Returns:
             bool: True if note was created successfully, False otherwise
@@ -64,10 +76,19 @@ class AppleNotesCreator:
         title = self._escape_for_applescript(title)
         full_content = self._escape_for_applescript(full_content)
 
+        # Determine target folder
+        target_folder = folder if folder else "Notes"
+        target_folder = self._escape_for_applescript(target_folder)
+
         script = f'''
         tell application "Notes"
             tell account "iCloud"
-                set newNote to make new note at folder "Notes" with properties {{name:"{title}", body:"{full_content}"}}
+                try
+                    set targetFolder to folder "{target_folder}"
+                on error
+                    set targetFolder to make new folder with properties {{name:"{target_folder}"}}
+                end try
+                set newNote to make new note at targetFolder with properties {{name:"{title}", body:"{full_content}"}}
             end tell
         end tell
         '''

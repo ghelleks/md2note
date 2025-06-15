@@ -17,6 +17,8 @@ class MD2Note:
         self,
         source_dir: str,
         clean_dir: Optional[str] = None,
+        folder: Optional[str] = None,
+        auto_folder: bool = False,
         directory_scanner=None,
         apple_script=None,
         file_processor=None,
@@ -28,6 +30,8 @@ class MD2Note:
         Args:
             source_dir (str): Directory containing markdown files
             clean_dir (str, optional): Directory to move processed files to
+            folder (str, optional): Folder name to place notes in Apple Notes
+            auto_folder (bool): Whether to auto-generate unique folder name
             directory_scanner: Optional custom directory scanner (for testing)
             apple_script: Optional custom AppleNotesCreator (for testing)
             file_processor: Optional custom file processor class (for testing)
@@ -35,6 +39,12 @@ class MD2Note:
         """
         self.source_dir = Path(source_dir)
         self.clean_dir = Path(clean_dir) if clean_dir else self.source_dir / "clean"
+        
+        # Determine target folder for notes
+        if auto_folder:
+            self.target_folder = AppleNotesCreator.generate_unique_folder_name()
+        else:
+            self.target_folder = folder  # Could be None for default behavior
 
         # Initialize components (allow dependency injection for testing)
         self.scanner = directory_scanner or DirectoryScanner(str(self.source_dir))
@@ -83,7 +93,7 @@ class MD2Note:
             content = processor.get_content()
             metadata = processor.extract()
             title = processor.get_title()
-            if self.apple_notes.create_note(title, content, metadata):
+            if self.apple_notes.create_note(title, content, metadata, self.target_folder):
                 self.file_mover.move_file(file_path)
                 self.logger.info(f"Successfully processed {file_path}")
                 return True
@@ -98,6 +108,13 @@ class MD2Note:
         """Run the markdown to notes conversion process."""
         try:
             self.logger.info("Starting conversion process")
+            
+            # Log folder information
+            if self.target_folder:
+                self.logger.info(f"Notes will be placed in folder: {self.target_folder}")
+            else:
+                self.logger.info("Notes will be placed in default 'Notes' folder")
+            
             # Create clean directory if it doesn't exist
             self.clean_dir.mkdir(parents=True, exist_ok=True)
 
