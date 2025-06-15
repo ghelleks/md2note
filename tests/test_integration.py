@@ -5,6 +5,7 @@ import shutil
 import tempfile
 from pathlib import Path
 import pytest
+from unittest.mock import patch, MagicMock
 from src.app import MD2Note
 from src.md2note import parse_args
 
@@ -47,6 +48,16 @@ This is a test note with metadata.""",
 
     # Cleanup
     shutil.rmtree(temp_dir)
+
+@pytest.fixture
+def mock_subprocess():
+    """Mock subprocess.Popen for testing."""
+    with patch('src.applescript.subprocess.Popen') as mock_popen:
+        mock_process = MagicMock()
+        mock_process.communicate.return_value = (b'', b'')
+        mock_process.returncode = 0
+        mock_popen.return_value = mock_process
+        yield mock_popen
 
 def test_full_workflow(test_environment):
     """Test the complete workflow from scanning to note creation."""
@@ -131,4 +142,59 @@ def test_directory_structure_preservation(test_environment):
     # Verify nested directory structure
     nested_dir = test_environment["clean_dir"] / "nested" / "subdir"
     assert nested_dir.exists()
-    assert (nested_dir / "note.md").exists() 
+    assert (nested_dir / "note.md").exists()
+
+def test_end_to_end_with_custom_folder(test_environment, mock_subprocess):
+    """Test end-to-end processing with custom folder."""
+    # Create test markdown file
+    content = "# Test Note\n\nThis is a test note for folder testing."
+    test_file = test_environment["source_dir"] / "test.md"
+    test_file.write_text(content)
+
+    # Run the application with custom folder
+    app = MD2Note(str(test_environment["source_dir"]), str(test_environment["clean_dir"]), folder="Test Folder")
+    app.run()
+
+    # Verify file was moved
+    moved_file = test_environment["clean_dir"] / "test.md"
+    assert moved_file.exists()
+    assert not test_file.exists()
+
+@patch('src.applescript.AppleNotesCreator.generate_unique_folder_name')
+def test_end_to_end_with_auto_folder(mock_generate, test_environment, mock_subprocess):
+    """Test end-to-end processing with auto-generated folder."""
+    # Mock folder name generation
+    mock_generate.return_value = "md2note-20250615-120000"
+    
+    # Create test markdown file
+    content = "# Test Note\n\nThis is a test note for auto-folder testing."
+    test_file = test_environment["source_dir"] / "test.md" 
+    test_file.write_text(content)
+
+    # Run the application with auto-folder
+    app = MD2Note(str(test_environment["source_dir"]), str(test_environment["clean_dir"]), auto_folder=True)
+    app.run()
+
+    # Verify unique folder name was generated
+    mock_generate.assert_called_once()
+
+    # Verify file was moved
+    moved_file = test_environment["clean_dir"] / "test.md"
+    assert moved_file.exists()
+    assert not test_file.exists()
+
+def test_folder_with_special_characters(test_environment, mock_subprocess):
+    """Test folder creation with special characters in folder name."""
+    # Create test markdown file
+    content = "# Test Note\n\nTesting folder with special characters."
+    test_file = test_environment["source_dir"] / "test.md"
+    test_file.write_text(content)
+
+    # Run with folder containing special characters
+    special_folder = 'Import "Batch" & More'
+    app = MD2Note(str(test_environment["source_dir"]), str(test_environment["clean_dir"]), folder=special_folder)
+    app.run()
+
+    # Verify file was processed
+    moved_file = test_environment["clean_dir"] / "test.md"
+    assert moved_file.exists() 
