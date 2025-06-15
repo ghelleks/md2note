@@ -97,8 +97,35 @@
 - [ ] Deployment verification report
 - [ ] Production environment configuration documentation
 
+## Phase 5: Google Docs Export Implementation
+**Tasks:**
+- [x] Research Google Docs API capabilities and authentication methods
+- [x] Analyze current codebase architecture and identify extension points  
+- [x] Design export strategy pattern to support multiple destinations
+- [x] Add Google API client libraries to requirements.txt
+- [x] Implement Google Docs exporter class with authentication and document creation
+- [x] Refactor existing AppleScript functionality into exporter class
+- [x] Add CLI options for export destination and Google Drive folder selection
+- [x] Implement Google OAuth2 authentication flow with credential management
+- [x] Implement markdown to Google Docs rich text conversion
+- [x] Extend error handling for Google API errors and network issues
+- [x] Write comprehensive unit tests for Google Docs exporter
+- [x] Write integration tests for end-to-end Google Docs workflow
+- [x] Update README and CLI documentation for Google Docs export feature
+
+**Deliverables:**
+- [x] Export strategy pattern with DocumentExporter abstract base class
+- [x] GoogleDocsExporter implementation with OAuth2 authentication
+- [x] AppleNotesExporter refactored to use strategy pattern
+- [x] CLI interface with --export-to and --gdocs-folder options
+- [x] Comprehensive unit test suite for all exporter components
+- [x] Integration tests for end-to-end Google Docs workflow
+- [x] Updated documentation and usage examples
+- [x] Google Cloud setup instructions for OAuth2 credentials
+
 ## Open Issues
 - [x] Add initial formatting to the Note (#1) ✅
+- [ ] Create an option to export to Google Docs (#3) ⌛️ **In Progress**
 
 ## Testing Summary
 - **Unit Tests:** Directory scanning, markdown parsing, metadata extraction, note creation (mocked), file movement, error handling
