@@ -119,13 +119,13 @@ class TestGoogleDocsExporter:
         result = exporter.export("Test Title", "Test content")
         assert result is False
 
+    @patch('src.google_docs_exporter.build')
+    @patch('src.google_docs_exporter.InstalledAppFlow.from_client_secrets_file')
+    @patch('src.google_docs_exporter.pickle.dump')
+    @patch('src.google_docs_exporter.pickle.load')
+    @patch('src.google_docs_exporter.Path.exists')
     @patch('builtins.open', new_callable=mock_open)
-    @patch('pathlib.Path.exists')
-    @patch('pickle.load')
-    @patch('pickle.dump')
-    @patch('google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file')
-    @patch('googleapiclient.discovery.build')
-    def test_authenticate_new_credentials(self, mock_build, mock_flow, mock_dump, mock_load, mock_exists, mock_file):
+    def test_authenticate_new_credentials(self, mock_file, mock_exists, mock_load, mock_dump, mock_flow, mock_build):
         """Test authentication with new credentials."""
         mock_exists.return_value = False
         
@@ -149,11 +149,11 @@ class TestGoogleDocsExporter:
         assert exporter.docs_service == mock_docs
         assert exporter.drive_service == mock_drive
 
+    @patch('src.google_docs_exporter.build')
+    @patch('src.google_docs_exporter.pickle.load')
+    @patch('src.google_docs_exporter.Path.exists')
     @patch('builtins.open', new_callable=mock_open)
-    @patch('pathlib.Path.exists')
-    @patch('pickle.load')
-    @patch('googleapiclient.discovery.build')
-    def test_authenticate_existing_valid_credentials(self, mock_build, mock_load, mock_exists, mock_file):
+    def test_authenticate_existing_valid_credentials(self, mock_file, mock_exists, mock_load, mock_build):
         """Test authentication with existing valid credentials."""
         mock_exists.return_value = True
         

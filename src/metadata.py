@@ -19,11 +19,16 @@ class MarkdownMetadataExtractor:
         """
         Extract metadata from the markdown file.
         Returns:
-            dict: Metadata dictionary
+            dict: Metadata dictionary combining frontmatter and file properties
         """
-        metadata = self._extract_frontmatter()
-        if not metadata:
-            metadata = self._extract_file_properties()
+        # Start with file properties as base
+        metadata = self._extract_file_properties()
+        
+        # Merge frontmatter metadata, allowing it to override file properties
+        frontmatter_metadata = self._extract_frontmatter()
+        if frontmatter_metadata:
+            metadata.update(frontmatter_metadata)
+            
         return metadata
 
     def _extract_frontmatter(self) -> Optional[Dict[str, Any]]:

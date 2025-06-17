@@ -207,7 +207,8 @@ class TestGoogleDocsIntegration:
         clean_files = list(self.clean_dir.glob("*.md"))
         assert len(clean_files) == 2
 
-    def test_empty_source_directory(self):
+    @patch.object(GoogleDocsExporter, 'validate_configuration', return_value=True)
+    def test_empty_source_directory(self, mock_validate):
         """Test handling of empty source directory."""
         app = MD2Note(
             source_dir=str(self.source_dir),

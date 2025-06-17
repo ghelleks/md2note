@@ -28,9 +28,11 @@ class DirectoryScanner:
             List[Path]: List of paths to markdown files
         """
         markdown_files = []
-        for file_path in self.directory.glob("**/*.md"):
-            if file_path.is_file():
-                markdown_files.append(file_path)
+        # Scan for both .md and .markdown extensions
+        for pattern in ["**/*.md", "**/*.markdown"]:
+            for file_path in self.directory.glob(pattern):
+                if file_path.is_file():
+                    markdown_files.append(file_path)
         return markdown_files
 
     def get_file_count(self) -> int:
