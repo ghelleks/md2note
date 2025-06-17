@@ -154,3 +154,46 @@ class TestAppleNotesExporter:
         
         result = exporter._run_script("test script")
         assert result is False
+
+    def test_remove_title_header_matching(self):
+        """Test removal of title header when it matches the title."""
+        exporter = AppleNotesExporter()
+        content = "# My Title\n\nThis is the content."
+        title = "My Title"
+        
+        result = exporter._remove_title_header(content, title)
+        assert result == "This is the content."
+
+    def test_remove_title_header_not_matching(self):
+        """Test that title header is not removed when it doesn't match."""
+        exporter = AppleNotesExporter()
+        content = "# Different Title\n\nThis is the content."
+        title = "My Title"
+        
+        result = exporter._remove_title_header(content, title)
+        assert result == "# Different Title\n\nThis is the content."
+
+    def test_remove_title_header_no_header(self):
+        """Test content without H1 header remains unchanged."""
+        exporter = AppleNotesExporter()
+        content = "This is just content without headers."
+        title = "My Title"
+        
+        result = exporter._remove_title_header(content, title)
+        assert result == "This is just content without headers."
+
+    def test_remove_title_header_empty_lines(self):
+        """Test removal with empty lines after title header."""
+        exporter = AppleNotesExporter()
+        content = "# My Title\n\n\n\nThis is the content."
+        title = "My Title"
+        
+        result = exporter._remove_title_header(content, title)
+        assert result == "This is the content."
+
+    def test_remove_title_header_empty_content(self):
+        """Test with empty content."""
+        exporter = AppleNotesExporter()
+        
+        assert exporter._remove_title_header("", "Title") == ""
+        assert exporter._remove_title_header("Content", "") == "Content"

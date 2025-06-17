@@ -50,23 +50,31 @@ class AppleNotesExporter(DocumentExporter):
         Returns:
             bool: True if note was created successfully, False otherwise
         """
-        # Convert markdown content to HTML
-        html_content = self._convert_markdown_to_html(content)
+        # Remove the first H1 header from content if it matches the title
+        # This prevents title duplication in the note
+        content_without_title = self._remove_title_header(content, title)
         
-        # Build the complete note content: Metadata + Content
+        # Convert markdown content to HTML
+        html_content = self._convert_markdown_to_html(content_without_title)
+        
+        # Build the complete note content: Content + Separator + Metadata
         content_parts = []
         
-        # Add formatted metadata if provided
+        # Add the main content first
+        content_parts.append(html_content)
+        
+        # Add formatted metadata at the end if provided
         if metadata:
+            # Add a visual separator before metadata
+            separator = "<hr><br>"
+            content_parts.append(separator)
+            
             metadata_section = self._format_metadata(metadata)
             metadata_html = self._convert_markdown_to_html(metadata_section)
             content_parts.append(metadata_html)
         
-        # Add the main content
-        content_parts.append(html_content)
-        
-        # Join all parts with line breaks
-        full_content = "<br><br>".join(content_parts)
+        # Join all parts
+        full_content = "".join(content_parts)
 
         # Escape special characters for AppleScript
         title = self._escape_for_applescript(title)
@@ -113,6 +121,44 @@ class AppleNotesExporter(DocumentExporter):
         ])
         
         return md.convert(md_content)
+
+    def _remove_title_header(self, content: str, title: str) -> str:
+        """
+        Remove the first H1 header from content if it matches the title.
+        This prevents title duplication in Apple Notes.
+        
+        Args:
+            content: The markdown content
+            title: The extracted title
+            
+        Returns:
+            str: Content with title header removed if it was a duplicate
+        """
+        if not content or not title:
+            return content
+            
+        lines = content.strip().split('\n')
+        if not lines:
+            return content
+            
+        # Check if first non-empty line is an H1 that matches the title
+        for i, line in enumerate(lines):
+            line = line.strip()
+            if not line:
+                continue  # Skip empty lines
+            if line.startswith('# '):
+                header_title = line[2:].strip()
+                if header_title == title:
+                    # Remove this line and return the rest
+                    remaining_lines = lines[i+1:]
+                    # Remove any immediately following empty lines
+                    while remaining_lines and not remaining_lines[0].strip():
+                        remaining_lines.pop(0)
+                    return '\n'.join(remaining_lines)
+            # If we hit non-header content, stop looking
+            break
+            
+        return content
 
     def _format_metadata(self, metadata: Dict[str, Any]) -> str:
         """
