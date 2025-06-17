@@ -12,7 +12,7 @@ class TestExporterFactory:
 
     def test_create_apple_notes_exporter(self):
         """Test creating an Apple Notes exporter."""
-        with patch('src.exporters.AppleNotesExporter') as mock_exporter:
+        with patch('src.apple_notes_exporter.AppleNotesExporter') as mock_exporter:
             mock_instance = Mock()
             mock_exporter.return_value = mock_instance
             
@@ -23,7 +23,7 @@ class TestExporterFactory:
 
     def test_create_google_docs_exporter(self):
         """Test creating a Google Docs exporter."""
-        with patch('src.exporters.GoogleDocsExporter') as mock_exporter:
+        with patch('src.google_docs_exporter.GoogleDocsExporter') as mock_exporter:
             mock_instance = Mock()
             mock_exporter.return_value = mock_instance
             
@@ -34,7 +34,7 @@ class TestExporterFactory:
 
     def test_create_google_docs_exporter_without_folder(self):
         """Test creating a Google Docs exporter without specifying folder."""
-        with patch('src.exporters.GoogleDocsExporter') as mock_exporter:
+        with patch('src.google_docs_exporter.GoogleDocsExporter') as mock_exporter:
             mock_instance = Mock()
             mock_exporter.return_value = mock_instance
             
