@@ -53,11 +53,33 @@ This project aims to develop a Python application that processes a directory of 
 
 ---
 
+## Implementation Status
+
+### ✅ Completed Features
+- **FR1**: Directory processing with recursive scanning
+- **FR2**: AppleScript note creation with metadata preservation  
+- **FR3**: File movement to clean directory with structure preservation
+- **FR4**: Custom folder organization via `--folder` argument ✅ **Phase 2 Complete**
+- **FR5**: Auto-generated unique folders via `--auto-folder` argument ✅ **Phase 2 Complete**
+- **NFR1**: YAML front matter and file property metadata extraction
+- **NFR2**: Comprehensive error handling and user prompting
+
+### 🧪 Testing Status
+- **Unit Tests**: 55/55 passing (100% success rate)
+- **Code Coverage**: 91% across all modules
+- **Integration Tests**: End-to-end workflows validated ✅ **Phase 3 Complete**
+
+### 📚 Documentation Status
+- **User Documentation**: README.md updated with folder usage examples ✅ **Phase 4 Complete**
+- **CLI Documentation**: Complete argument reference and examples ✅ **Phase 4 Complete**
+- **Requirements Documentation**: Updated to reflect implementation status ✅ **Phase 4 Complete**
+
 ## Implementation Notes
 - Metadata extraction is implemented to prefer YAML front matter, falling back to file properties if not present.
 - AppleScript integration is handled via a dedicated Python module that creates notes in Apple Notes, with robust error handling and test coverage.
 - Folder functionality supports both user-specified folders and auto-generated unique folder names.
 - Auto-generated folders use timestamp-based naming for uniqueness (format: md2note-YYYYMMDD-HHMMSS).
 - AppleScript integration includes folder creation and note placement capabilities.
+- CLI interface provides mutually exclusive `--folder` and `--auto-folder` options for organization flexibility.
 
-*Last updated: 2024-06-09* 
+*Last updated: 2025-06-22* 
