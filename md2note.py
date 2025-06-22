@@ -20,12 +20,30 @@ def parse_args() -> argparse.Namespace:
         "--clean",
         help="Directory to move processed files to (default: source/clean)"
     )
+    
+    # Folder organization options (mutually exclusive)
+    folder_group = parser.add_mutually_exclusive_group()
+    folder_group.add_argument(
+        "--folder",
+        help="Folder name to place notes in Apple Notes"
+    )
+    folder_group.add_argument(
+        "--auto-folder",
+        action="store_true",
+        help="Auto-generate unique folder name for this import batch"
+    )
+    
     return parser.parse_args()
 
 def main() -> None:
     args = parse_args()
     try:
-        app = MD2Note(args.source, args.clean)
+        app = MD2Note(
+            source_dir=args.source, 
+            clean_dir=args.clean,
+            folder=args.folder,
+            auto_folder=args.auto_folder
+        )
         app.run()
     except Exception as e:
         logging.error(f"Application error: {str(e)}")

@@ -156,3 +156,65 @@ def test_md2note_error_handling(temp_source_dir):
     )
     assert app.process_file(temp_source_dir / "test1.md") is False
     scanner.scan_for_markdown.side_effect = Exception("Scanner error")
+    with pytest.raises(Exception):
+        app.run()
+
+def test_logging_setup(temp_source_dir):
+    app = MD2Note(str(temp_source_dir))
+    app.logger.info("Test log message")
+    assert app.logger.name == "src.app"
+    assert Path("md2note.log").exists()
+    Path("md2note.log").unlink()
+
+def test_init_with_custom_folder(temp_source_dir):
+    """Test initialization with custom folder."""
+    app = MD2Note(str(temp_source_dir), folder="Custom Folder")
+    assert app.target_folder == "Custom Folder"
+
+@patch('src.app.AppleNotesCreator.generate_unique_folder_name')
+def test_init_with_auto_folder(mock_generate, temp_source_dir):
+    """Test initialization with auto-generated folder."""
+    mock_generate.return_value = "md2note-20250615-120000"
+    
+    app = MD2Note(str(temp_source_dir), auto_folder=True, export_type="apple_notes")
+    assert app.target_folder == "md2note-20250615-120000"
+    mock_generate.assert_called_once()
+
+def test_init_no_folder_specified(temp_source_dir):
+    """Test initialization with no folder specified (default behavior)."""
+    app = MD2Note(str(temp_source_dir))
+    assert app.target_folder is None
+
+def test_process_file_with_folder(temp_source_dir):
+    """Test file processing with folder configuration."""
+    scanner = MagicMock()
+    exporter = MagicMock()
+    processor_cls = MagicMock()
+    mover = MagicMock()
+    processor_instance = MagicMock()
+    processor_instance.get_content.return_value = "Test content"
+    processor_instance.extract.return_value = {"filename": "test.md"}
+    processor_instance.get_title.return_value = "Test Title"
+    processor_cls.return_value = processor_instance
+    exporter.export.return_value = True
+    exporter.validate_configuration.return_value = True
+    
+    app = MD2Note(
+        str(temp_source_dir),
+        folder="Test Folder",
+        directory_scanner=scanner,
+        exporter=exporter,
+        file_processor=processor_cls,
+        file_mover=mover
+    )
+    
+    test_file = temp_source_dir / "test.md"
+    test_file.touch()
+    
+    result = app.process_file(test_file)
+    assert result is True
+    
+    # Verify export is called with proper parameters
+    exporter.export.assert_called_once_with(
+        "Test Title", "Test content", {"filename": "test.md"}
+    )

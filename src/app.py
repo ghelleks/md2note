@@ -20,6 +20,8 @@ class MD2Note:
         clean_dir: Optional[str] = None,
         export_type: str = "apple_notes",
         gdocs_folder: Optional[str] = None,
+        folder: Optional[str] = None,
+        auto_folder: bool = False,
         directory_scanner=None,
         exporter=None,
         file_processor=None,
@@ -33,6 +35,8 @@ class MD2Note:
             clean_dir (str, optional): Directory to move processed files to
             export_type (str): Export destination type ('apple_notes' or 'google_docs')
             gdocs_folder (str, optional): Google Drive folder for Google Docs export
+            folder (str, optional): Folder name to place notes in Apple Notes
+            auto_folder (bool): Whether to auto-generate unique folder name
             directory_scanner: Optional custom directory scanner (for testing)
             exporter: Optional custom exporter (for testing)
             file_processor: Optional custom file processor class (for testing)
@@ -40,10 +44,19 @@ class MD2Note:
         """
         self.source_dir = Path(source_dir)
         self.clean_dir = Path(clean_dir) if clean_dir else self.source_dir / "clean"
+        
+        # Determine target folder for notes (only relevant for Apple Notes export)
+        if export_type == "apple_notes":
+            if auto_folder:
+                self.target_folder = AppleNotesCreator.generate_unique_folder_name()
+            else:
+                self.target_folder = folder  # Could be None for default behavior
+        else:
+            self.target_folder = None  # Not used for other export types
 
         # Initialize components (allow dependency injection for testing)
         self.scanner = directory_scanner or DirectoryScanner(str(self.source_dir))
-        self.exporter = exporter or ExporterFactory.create_exporter(export_type, gdocs_folder=gdocs_folder)
+        self.exporter = exporter or ExporterFactory.create_exporter(export_type, gdocs_folder=gdocs_folder, folder=self.target_folder)
         self.file_processor = file_processor or MarkdownMetadataExtractor
         self.file_mover = file_mover or FileMover(str(self.source_dir), str(self.clean_dir))
 
@@ -108,6 +121,12 @@ class MD2Note:
             if not self.exporter.validate_configuration():
                 self.logger.error("Exporter configuration validation failed")
                 raise RuntimeError("Exporter not properly configured")
+            
+            # Log folder information (for Apple Notes only)
+            if hasattr(self.exporter, 'folder') and self.exporter.folder:
+                self.logger.info(f"Notes will be placed in folder: {self.exporter.folder}")
+            elif hasattr(self.exporter, 'folder'):
+                self.logger.info("Notes will be placed in default 'Notes' folder")
             
             # Create clean directory if it doesn't exist
             self.clean_dir.mkdir(parents=True, exist_ok=True)

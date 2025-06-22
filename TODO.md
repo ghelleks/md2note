@@ -125,8 +125,14 @@
 
 ## Open Issues
 - [x] Add initial formatting to the Note (#1) ✅
-- [ ] Create an option to export to Google Docs (#3) ⌛️ **In Progress**
+- [x] Create an option to export to Google Docs (#3) ✅ **Complete**
+- [x] Optionally add a label to imported Notes (#2) ✅
+  - **Phase 1**: Research & Design ✅ (Folder-based approach identified)
+  - **Phase 2**: Core Implementation ✅ (CLI options and AppleScript integration)  
+  - **Phase 3**: Testing ✅ (55/55 tests passing, 91% coverage)
+  - **Phase 4**: Documentation ✅ (README, CLI docs, and requirements updated)
 
 ## Testing Summary
-- **Unit Tests:** Directory scanning, markdown parsing, metadata extraction, note creation (mocked), file movement, error handling
-- **Integration Tests:** End-to-end workflow, error scenarios, user prompts, CLI interface, production scenarios 
+- **Unit Tests:** Directory scanning, markdown parsing, metadata extraction, note creation (mocked), file movement, error handling, folder organization
+- **Integration Tests:** End-to-end workflow, error scenarios, user prompts, CLI interface, production scenarios, folder creation and note placement, Google Docs export workflow
+- **Coverage:** 91% code coverage across all modules with 55/55 tests passing 

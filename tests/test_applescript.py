@@ -150,4 +150,44 @@ def test_convert_markdown_to_html_code_blocks(notes_creator):
 def test_convert_markdown_to_html_empty(notes_creator):
     """Test empty markdown conversion."""
     assert notes_creator._convert_markdown_to_html("") == ""
-    assert notes_creator._convert_markdown_to_html(None) == "" 
+    assert notes_creator._convert_markdown_to_html(None) == ""
+
+def test_generate_unique_folder_name():
+    """Test unique folder name generation."""
+    folder_name = AppleNotesCreator.generate_unique_folder_name()
+    assert folder_name.startswith("md2note-")
+    # md2note- = 8, YYYY = 4, MM = 2, DD = 2, - = 1, HH = 2, MM = 2, SS = 2
+    # Total: 8 + 4 + 2 + 2 + 1 + 2 + 2 + 2 = 23
+    assert len(folder_name) == 23
+
+def test_create_note_with_custom_folder(notes_creator, mock_subprocess):
+    """Test note creation with custom folder."""
+    result = notes_creator.create_note("Test Title", "Test Content", None, "Custom Folder")
+    assert result is True
+    
+    # Verify the script includes folder creation logic
+    note_creation_call = mock_subprocess.call_args_list[1]  # Second call is note creation
+    script = note_creation_call[0][0][2]
+    assert "Custom Folder" in script
+    assert "make new folder" in script
+
+def test_create_note_with_default_folder(notes_creator, mock_subprocess):
+    """Test note creation with default folder (None)."""
+    result = notes_creator.create_note("Test Title", "Test Content", None, None)
+    assert result is True
+    
+    # Verify the script uses "Notes" as default folder
+    note_creation_call = mock_subprocess.call_args_list[1]  # Second call is note creation
+    script = note_creation_call[0][0][2]
+    assert '"Notes"' in script
+
+def test_create_note_folder_with_special_characters(notes_creator, mock_subprocess):
+    """Test note creation with folder containing special characters."""
+    folder_with_quotes = 'Folder "with quotes"'
+    result = notes_creator.create_note("Test Title", "Test Content", None, folder_with_quotes)
+    assert result is True
+    
+    # Verify the script properly escapes the folder name
+    note_creation_call = mock_subprocess.call_args_list[1]  # Second call is note creation  
+    script = note_creation_call[0][0][2]
+    assert 'Folder \\"with quotes\\"' in script 
